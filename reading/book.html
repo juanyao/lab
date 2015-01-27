@@ -11,9 +11,10 @@
        <div class="row">
            <div class="col-md-12">
               <h1>Books</h1>
-              <div>
-                  Name: <input ng-model="vm.new.name" />
-                  <button class="btn btn-success" ng-click="vm.add()">Add book</button>
+              <div class="row">
+                  <div class="col-md-4">Name: <input ng-model="vm.new.name" /></div>
+                  <div class="col-md-4">Author: <input ng-model="vm.new.author" /></div>
+                  <div class="col-md-4"><button class="btn btn-success right" ng-click="vm.add()">Add book</button></div>
               </div>
               <hr />
                <div class="list-group">
@@ -21,9 +22,11 @@
                        ng-repeat="book in vm.books">
                        <div ng-hide='book.isEdit' class="col-md-9">
                            <h4 ng-bind="book.name"></h4>
-                           <span ng-bind="book.date"></span>
+                           By <strong><span ng-bind="book.author"></span></strong>
+                           <small ng-bind="book.date"></small>
                        </div>
                        <div ng-show='book.isEdit' class="col-md-9">
+                            Edit is still in progress.
                            <input ng-model="book.name" />
                            <input ng-model="book.date" />
                        </div>
@@ -86,10 +89,15 @@
             function add(){
                 vm.books.$add({
                     name:vm.new.name,
+                    author:vm.new.author,
                     date: moment().format('MMMM Do YYYY, h:mm:ss a'),
-                });
+                }).then(success);
 
-                toastr.success('Successfully added '+ vm.new.name);
+
+                function success(){
+                    vm.new = {};
+                    toastr.success('Successfully added '+ vm.new.name);
+                }
             }
 
             function cancel(book){
