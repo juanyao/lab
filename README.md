@@ -1,2 +1,2 @@
 # lab
-Source code of my stuffs at la.juanyao.net
+Source code of my stuffs at <http://lab.juanyao.net>
